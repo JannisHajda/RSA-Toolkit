@@ -137,12 +137,12 @@ class RSAToolkit:
 
     def gen_keys(self, key_size):
         """ Generiert p, q, e, d, N in gewünschter Bitlänge """
-        p = gen_prime(key_size)
-        q = gen_prime(key_size)
+        p = gen_prime(key_size//2)
+        q = gen_prime(key_size//2)
         N = p * q
         phiN = (p - 1)*(q - 1)
 
-        e = gen_prime(key_size//2)
+        e = gen_prime(key_size//4)
         # überprüft ob 1 < e < phiN und ggT(e, phiN) = 1
         while not (1 < e < phiN and euklidischer_algorithmus(e, phiN) == 1):
             e = gen_prime(key_size//2)
@@ -312,7 +312,7 @@ def gen_menu():
             print("Es kann sein, dass die Berechnung der Schlüssel sehr lange dauert! \n")
             key_size = int(input("Schlüssellänge in Bit: "))
 
-            if key_size >= 4:  # Überprüft ob die Schlüssellänge mindestens 4 Bit beträgt
+            if key_size >= 8:  # Überprüft ob die Schlüssellänge mindestens 8 Bit beträgt
                 start = time.time()
                 N, e, d = toolkit.gen_keys(key_size)
                 end = time.time()
@@ -325,10 +325,10 @@ def gen_menu():
                     "Im Hauptmenü können Sie nun die Funktionen 3 und 4 zur Ver- und Entschlüsselung von Nachrichten verwenden!")
                 break
             else:
-                print("Bitte wählen Sie eine Schlüssellänge von mindestens 4 Bit! \n")
+                print("Bitte wählen Sie eine Schlüssellänge von mindestens 8 Bit! \n")
 
         except ValueError:
-            print("Bitte wählen Sie eine Schlüssellänge von mindestens 4 Bit! \n")
+            print("Bitte wählen Sie eine Schlüssellänge von mindestens 8 Bit! \n")
 
     input("Drücken Sie eine beliebige Taste...")
     print("")
