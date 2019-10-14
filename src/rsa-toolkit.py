@@ -137,12 +137,12 @@ class RSAToolkit:
 
     def gen_keys(self, key_size):
         """ Generiert p, q, e, d, N in gewünschter Bitlänge """
-        p = gen_prime(key_size//2)
-        q = gen_prime(key_size//2)
+        p = gen_prime(key_size)
+        q = gen_prime(key_size)
         N = p * q
         phiN = (p - 1)*(q - 1)
 
-        e = gen_prime(key_size//4)
+        e = gen_prime(key_size//2)
         # überprüft ob 1 < e < phiN und ggT(e, phiN) = 1
         while not (1 < e < phiN and euklidischer_algorithmus(e, phiN) == 1):
             e = gen_prime(key_size//2)
