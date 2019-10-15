@@ -204,26 +204,31 @@ def main_menu():
     exit()
 
 
-def config_menu():
+def gen_menu():
     while True:
         try:
-            print("*** Konfiguration ***")
-            choice = int(input(
-                "1: Aktuelle Konfiguration speichern \n2: Konfiguration laden \n3: Zum Hauptmenü \n\nWählen Sie eine Funktion: "))
-            if choice == 1:
-                toolkit.save_config()
-                print("Die aktuelle Konfiguration wurde gespeichert!")
-                break
-            elif choice == 2:
-                toolkit.load_config()
-                print("Die Konfiguration wurde geladen!")
-                break
-            elif choice == 3:
+            print("*** Schlüsselgenerierung ***")
+            print("ACHTUNG: Die Geschwindigkeit dieser Funktion ist von der verfügbaren Rechenleistung und der Schlüssellänge abhängig.")
+            print("Es kann sein, dass die Berechnung der Schlüssel sehr lange dauert! \n")
+            key_size = int(input("Schlüssellänge in Bit: "))
+
+            if key_size >= 8:  # Überprüft ob die Schlüssellänge mindestens 8 Bit beträgt
+                start = time.time()
+                N, e, d = toolkit.gen_keys(key_size)
+                end = time.time()
+                elapsed_time = end - start
+                print("Öffentlicher Schlüssel (e, N): (%s, %s)" % (e, N))
+                print("Privater Schlüssel d: %s \n" % d)
+                print(
+                    "Die Schlüsselgenerierung war erfolgreich (%s Sekunden) und die Parameter wurden übernommen." % elapsed_time)
+                print(
+                    "Im Hauptmenü können Sie nun die Funktionen 3 und 4 zur Ver- und Entschlüsselung von Nachrichten verwenden!")
                 break
             else:
-                print("Bite wählen Sie eine verfügbare Funktion! \n")
+                print("Bitte wählen Sie eine Schlüssellänge von mindestens 8 Bit! \n")
+
         except ValueError:
-            print("Bite wählen Sie eine verfügbare Funktion! \n")
+            print("Bitte wählen Sie eine Schlüssellänge von mindestens 8 Bit! \n")
 
     input("Drücken Sie eine beliebige Taste...")
     print("")
@@ -304,37 +309,6 @@ def dec_menu():
     main_menu()
 
 
-def gen_menu():
-    while True:
-        try:
-            print("*** Schlüsselgenerierung ***")
-            print("ACHTUNG: Die Geschwindigkeit dieser Funktion ist von der verfügbaren Rechenleistung und der Schlüssellänge abhängig.")
-            print("Es kann sein, dass die Berechnung der Schlüssel sehr lange dauert! \n")
-            key_size = int(input("Schlüssellänge in Bit: "))
-
-            if key_size >= 8:  # Überprüft ob die Schlüssellänge mindestens 8 Bit beträgt
-                start = time.time()
-                N, e, d = toolkit.gen_keys(key_size)
-                end = time.time()
-                elapsed_time = end - start
-                print("Öffentlicher Schlüssel (e, N): (%s, %s)" % (e, N))
-                print("Privater Schlüssel d: %s \n" % d)
-                print(
-                    "Die Schlüsselgenerierung war erfolgreich (%s Sekunden) und die Parameter wurden übernommen." % elapsed_time)
-                print(
-                    "Im Hauptmenü können Sie nun die Funktionen 3 und 4 zur Ver- und Entschlüsselung von Nachrichten verwenden!")
-                break
-            else:
-                print("Bitte wählen Sie eine Schlüssellänge von mindestens 8 Bit! \n")
-
-        except ValueError:
-            print("Bitte wählen Sie eine Schlüssellänge von mindestens 8 Bit! \n")
-
-    input("Drücken Sie eine beliebige Taste...")
-    print("")
-    main_menu()
-
-
 def bruteforce_message():
     while True:
         try:
@@ -355,6 +329,32 @@ def bruteforce_message():
                 break
         except ValueError:
             print("Bitte geben Sie einen validen öffentlichen Schlüssel ein! \n")
+
+    input("Drücken Sie eine beliebige Taste...")
+    print("")
+    main_menu()
+
+
+def config_menu():
+    while True:
+        try:
+            print("*** Konfiguration ***")
+            choice = int(input(
+                "1: Aktuelle Konfiguration speichern \n2: Konfiguration laden \n3: Zum Hauptmenü \n\nWählen Sie eine Funktion: "))
+            if choice == 1:
+                toolkit.save_config()
+                print("Die aktuelle Konfiguration wurde gespeichert!")
+                break
+            elif choice == 2:
+                toolkit.load_config()
+                print("Die Konfiguration wurde geladen!")
+                break
+            elif choice == 3:
+                break
+            else:
+                print("Bite wählen Sie eine verfügbare Funktion! \n")
+        except ValueError:
+            print("Bite wählen Sie eine verfügbare Funktion! \n")
 
     input("Drücken Sie eine beliebige Taste...")
     print("")
